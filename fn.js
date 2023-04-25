@@ -3,6 +3,7 @@ const fn = {
   makeUser: (name, age) => ({
     name,
     age,
+    gender: undefined,
   }),
 };
 
