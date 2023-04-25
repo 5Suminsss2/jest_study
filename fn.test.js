@@ -6,8 +6,5 @@ const fn = require("./fn");
 // promise를 사용하면 return 꼭 해줘야함
 
 test("3초 후에 받아온 나이는 30", (done) => {
-  return fn.getAge().then((age) => {
-    expect(age).toBe(30);
-  });
-  // return expect(fn.getAge()).resolves.toBe(30); // 더 간결하게 resolve 테스트하는 방법
+  return expect(fn.getAge()).rejects.toBe(30);
 });
