@@ -1,28 +1,20 @@
 const fn = require("./fn");
 
-// 테스트 전후 작업
-// only : only를 붙이면 해당 테스트만 테스트할 수 있어짐
-// skip : skip을 붙이면 해당 테스트만 skip 가능
+// Mock Function 목 함수
+// 목 함수 : 테스트 하기 위해 흉내만 내는 함수
+// userDB에 접근해서 user list를 select 해오는 작업이 필요
+// mockFn.mock.calls의 mock은 호출되었던 property가 저장되어있음
+// => 알 수 있는 것 : 함수가 몇번 호출되었는지, 호출될때 전달된 인수는 무엇인가
 
-let num = 0;
+const mockFn = jest.fn();
 
-test(" 0 더하기 1은 1", () => {
-  expect(fn.add(num, 1)).toBe(1);
+mockFn();
+mockFn(1);
+
+test("함수는 2번 호출됩니다.", () => {
+  expect(mockFn.mock.calls.length).toBe(2);
 });
 
-test(" 0 더하기 2은 2", () => {
-  expect(fn.add(num, 2)).toBe(2);
-});
-
-test(" 0 더하기 3은 3", () => {
-  expect(fn.add(num, 3)).toBe(3);
-});
-
-test.skip(" 0 더하기 4은 4", () => {
-  expect(fn.add(num, 4)).toBe(4);
-  num = 10;
-});
-
-test.only(" 0 더하기 5은 5", () => {
-  expect(fn.add(num, 5)).toBe(6);
+test("2번째로 호출된 함수에 전달된 첫번째 인수는 1 입니다.", () => {
+  expect(mockFn.mock.calls[1][0]).toBe(1);
 });
