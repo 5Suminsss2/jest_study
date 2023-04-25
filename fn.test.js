@@ -1,14 +1,26 @@
 const fn = require("./fn");
 
 // Mock Function 목 함수
-// 유저 생성하는 테스트를 할때 매번 유저 생성하고 롤백하고 이러기 귀찮잖아 그럴때 mock을 사용하자
+// 유용한 함수들
 
-jest.mock("./fn");
+const mockFn = jest.fn();
 
-// 가짜 createUser가 return 해줘서 실제 db에 반영x
-fn.createUser.mockReturnValue({ name: "Mike" });
+mockFn(10, 20);
+mockFn();
+mockFn(30, 40);
 
-test("유저를 만든다", () => {
-  const user = fn.createUser("Mike");
-  expect(res.name).toBe("Mike");
+test("한번 이상 호출?", () => {
+  expect(mockFn).toBeCalled();
+});
+
+test("정확시 세번 호출?", () => {
+  expect(mockFn).toBeCalledTimes(3);
+});
+
+test("10이랑 20 전달받은 함수가 있는가?", () => {
+  expect(mockFn).toBeCalledWidth(10, 20);
+});
+
+test("마지막 함수는 30이랑 40을 받았음?", () => {
+  expect(mockFn).lastBeCalledWith(30, 40);
 });
