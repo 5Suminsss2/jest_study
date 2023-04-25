@@ -1,20 +1,18 @@
 const fn = require("./fn");
 
-// toEqual과 toStrictEqaul의 차이점
-// toStrictEqual이 좀 더 엄격하게 테스트함
-
-test("이름과 나이를 전달받아서 객체를 반환해줘", () => {
-  expect(fn.makeUser("Mike", 30)).toEqual({
-    // 성공
-    name: "Mike",
-    age: 30,
-  });
+// toBeNull, toBeUndefined, toBeDefined : 각각 null, undefined, defined인 경우 통과
+// 성공
+test("null은 null입니다.", () => {
+  expect(null).toBeNull();
 });
 
-test("이름과 나이를 전달받아서 객체를 반환해줘", () => {
-  expect(fn.makeUser("Mike", 30)).toStrictEqual({
-    // 실패 : gender를 안써주면 실패로 뜨는 strict 모드
-    name: "Mike",
-    age: 30,
-  });
+// toBeTruthy, toBeFalsy : true인지 false인지 boolean값을 판별
+// 성공
+test("0은 false입니다.", () => {
+  expect(fn.add(1, -1)).toBeFalsy();
+});
+
+// 성공
+test("비어있지 않은 문자열은 true입니다.", () => {
+  expect(fn.add("hello", "world")).toBeTruthy();
 });
