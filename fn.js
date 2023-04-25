@@ -1,5 +1,11 @@
 const fn = {
   add: (num1, num2) => num1 + num2,
+
+  // user db에 유저를 생성해주는 함수라고 가정하자
+  createUser: (name) => {
+    console.log("실제 사용자가 생성되었습니다.");
+    return { name };
+  },
   connectUserDb: () => {
     return new Promise((res) => {
       setTimeout(() => {
