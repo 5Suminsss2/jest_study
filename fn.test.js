@@ -2,24 +2,22 @@ const fn = require("./fn");
 
 // Mock Function 목 함수
 // callback함수를 사용하지 않고 목함수를 이용해도 잘 동작하고 코드도 간결해짐
+// mock.results에는 return 된 값이 남아있음
 
 // 목함수 생성
-const mockFn = jest.fn();
+const mockFn = jest.fn((num) => num + 1);
 
-function forEachAdd1(arr) {
-  arr.forEach((num) => {
-    mockFn(num + 1);
-  });
-}
+mockFn(10);
+mockFn(20);
+mockFn(30);
 
-forEachAdd1([10, 20, 30]);
-
-test("함수 호출은 3번 됩니다.", () => {
-  expect(mockFn.mock.calls.length).toBe(3);
+test("10에서 1 증가한 값이 반환됨 ", () => {
+  expect(mockFn.mock.results[0].value).toBe(11);
 });
 
-test("전달된 값은 11 21 31 입니다.", () => {
-  expect(mockFn.mock.calls[0][0]).toBe(11);
-  expect(mockFn.mock.calls[1][0]).toBe(21);
-  expect(mockFn.mock.calls[2][0]).toBe(31);
+test("20에서 1 증가한 값이 반환됨 ", () => {
+  expect(mockFn.mock.results[1].value).toBe(21);
+});
+test("30에서 1 증가한 값이 반환됨 ", () => {
+  expect(mockFn.mock.results[2].value).toBe(31);
 });
