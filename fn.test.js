@@ -1,33 +1,35 @@
 const fn = require("./fn");
 
 // 테스트 전후 작업
-// 초기화가 안되는 변수를 초기화 해야할때 사용하는 beforeEach, afterEach
-// beforeEach : 테스트 전
-// afterEach : 테스트 후
-// beforeEach를 안쓰면 num이 계속 저장되어서 0 1 3 6 10 이렇게 돼버린다
+// 테스트 전 유저 정보를 db에서 가져와서 테스트 후 db 종료하는 코드 작성하기
+// beforeEach, afterEach를 쓰면 각 테스트마다 연결했다가 풀었다가 이러니까 너무 시간이 많이 들어!
+// beforeAll, afterAll : 모든 테스트가 시작하기 전과 끝난 후에 1번씩만 호출하는 친구들을 사용하자
+let user;
 
-let num = 10;
+// beforeEach(async () => {
+//   user = await fn.connectUserDb();
+// });
 
-beforeEach(() => {
-  num = 0;
+// afterEach(() => {
+//   return fn.disconnectDb();
+// });
+
+beforeAll(async () => {
+  user = await fn.connectUserDb();
 });
 
-test("0 더하기 1은 1이야", async () => {
-  num = fn.add(num, 1);
-  expect(num).toBe(1);
+afterAll(() => {
+  return fn.disconnectDb();
 });
 
-test("0 더하기 2은 2이야", async () => {
-  num = fn.add(num, 1);
-  expect(num).toBe(1);
+test("이름은 Mike야", async () => {
+  expect(user.name).toBe("Mike");
 });
 
-test("0 더하기 3은 3이야", async () => {
-  num = fn.add(num, 1);
-  expect(num).toBe(1);
+test("나이는 30", async () => {
+  expect(user.age).toBe(30);
 });
 
-test("0 더하기 4은 4이야", async () => {
-  num = fn.add(num, 1);
-  expect(num).toBe(1);
+test("성별은 남성", async () => {
+  expect(user.gender).toBe("male");
 });
