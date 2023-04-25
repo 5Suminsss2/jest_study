@@ -1,20 +1,25 @@
 const fn = require("./fn");
 
 // Mock Function 목 함수
-// 목 함수 : 테스트 하기 위해 흉내만 내는 함수
-// userDB에 접근해서 user list를 select 해오는 작업이 필요
-// mockFn.mock.calls의 mock은 호출되었던 property가 저장되어있음
-// => 알 수 있는 것 : 함수가 몇번 호출되었는지, 호출될때 전달된 인수는 무엇인가
+// callback함수를 사용하지 않고 목함수를 이용해도 잘 동작하고 코드도 간결해짐
 
+// 목함수 생성
 const mockFn = jest.fn();
 
-mockFn();
-mockFn(1);
+function forEachAdd1(arr) {
+  arr.forEach((num) => {
+    mockFn(num + 1);
+  });
+}
 
-test("함수는 2번 호출됩니다.", () => {
-  expect(mockFn.mock.calls.length).toBe(2);
+forEachAdd1([10, 20, 30]);
+
+test("함수 호출은 3번 됩니다.", () => {
+  expect(mockFn.mock.calls.length).toBe(3);
 });
 
-test("2번째로 호출된 함수에 전달된 첫번째 인수는 1 입니다.", () => {
-  expect(mockFn.mock.calls[1][0]).toBe(1);
+test("전달된 값은 11 21 31 입니다.", () => {
+  expect(mockFn.mock.calls[0][0]).toBe(11);
+  expect(mockFn.mock.calls[1][0]).toBe(21);
+  expect(mockFn.mock.calls[2][0]).toBe(31);
 });
