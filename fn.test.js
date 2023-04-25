@@ -1,50 +1,28 @@
 const fn = require("./fn");
 
 // 테스트 전후 작업
-// 여러 db를 가져와야할 경우 테스트 전후 작업을 해보자
-// describe를 사용했을 때 각 순서 어떻게 진행되는지 체크해보자
-// beforeAll과 afterAll은 describe 내에서만 작동하게 됨
-// befroeEach는 describe내부의 beforeEach보다 밖의 beforeEach가 먼저 실행됨 (afterEach도 반대)
+// only : only를 붙이면 해당 테스트만 테스트할 수 있어짐
+// skip : skip을 붙이면 해당 테스트만 skip 가능
 
-beforeAll(async () => {
-  console.log("밖 befroeAll"); // 1
+let num = 0;
+
+test(" 0 더하기 1은 1", () => {
+  expect(fn.add(num, 1)).toBe(1);
 });
 
-beforeEach(() => {
-  console.log("밖 beforeEach"); //2, 6
+test(" 0 더하기 2은 2", () => {
+  expect(fn.add(num, 2)).toBe(2);
 });
 
-afterAll(() => {
-  console.log("밖 afterAll"); // 마지막
+test(" 0 더하기 3은 3", () => {
+  expect(fn.add(num, 3)).toBe(3);
 });
 
-afterEach(async () => {
-  console.log("밖 afterEach"); // 4
+test.skip(" 0 더하기 4은 4", () => {
+  expect(fn.add(num, 4)).toBe(4);
+  num = 10;
 });
 
-test("0+1=1", async () => {
-  expect(fn.add(0, 1)).toBe(1); // 3
-});
-
-// decribe로 하나로 뭉칠 수 있음
-decribe("Car 관련 작업", () => {
-  beforeAll(async () => {
-    console.log("안 befroeAll"); // 5
-  });
-
-  beforeEach(() => {
-    console.log("안 beforeEach"); // 7
-  });
-
-  afterEach(async () => {
-    console.log("안 afterEach"); // 9
-  });
-
-  afterAll(() => {
-    console.log("안 afterAll"); // 마지막 -1
-  });
-
-  test("0+1=1", async () => {
-    expect(fn.add(0, 1)).toBe(1); // 8
-  });
+test.only(" 0 더하기 5은 5", () => {
+  expect(fn.add(num, 5)).toBe(6);
 });
