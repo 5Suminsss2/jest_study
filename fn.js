@@ -18,6 +18,24 @@ const fn = {
       }, 500);
     });
   },
+  connectCarDb: () => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res({
+          brand: "bmw",
+          name: "z4",
+          color: "red",
+        });
+      }, 500);
+    });
+  },
+  disconnectCarDb: () => {
+    return new Promise((res) => {
+      setTimeout(() => {
+        res();
+      }, 500);
+    });
+  },
 };
 
 module.exports = fn;
